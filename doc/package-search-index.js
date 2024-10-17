@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"kata.algorithms"},{"l":"kata.arrays"},{"l":"kata.conditions"},{"l":"kata.math"},{"l":"kata.strings"},{"l":"kata.utils"}];updateSearchResults();
