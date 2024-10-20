@@ -1,0 +1,70 @@
+<project name="Team7-ApacheAnt" default="run" basedir=".">
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="doc.dir" value="doc"/>
+    <property name="jar.dir" value="jar"/>
+    <property name="main-class" value="Main"/>
+
+    <!-- Creates directories for the build -->
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${doc.dir}"/>
+        <mkdir dir="${jar.dir}"/>
+    </target>
+
+    <!-- Deletes current build to restart -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${doc.dir}"/>
+        <delete dir="${jar.dir}"/>
+    </target>
+
+    <!-- Compiles the source code -->
+    <target name="compile" depends="clean, init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}"/>
+    </target>
+
+    <!-- Running a specific class -->
+    <property name="class-name" value=""/>
+    <target name="run-class" depends="compile">
+        <java classname="${class-name}" classpath="${build.dir}">
+            <classpath>
+                <pathelement path="${build.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <!-- Runs Main.java -->
+    <!-- In this structure, Main.Java runs all the classes -->
+    <target name="run" depends="compile">
+        <java classname="${main-class}" classpath="${build.dir}">
+            <classpath>
+                <pathelement path="${build.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <!-- Generate JavaDoc documentation -->
+    <target name="javadoc" depends="init">
+        <javadoc sourcepath="${src.dir}" destdir="${doc.dir}" author="true" version="true" use="true"/>
+    </target>
+
+    <!-- Create JAR classes -->
+    <target name="jar-classes" depends="compile">
+        <jar destfile="${jar.dir}/Team7-Python-ApacheAnt-Classes.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Create a JAR documentation -->
+    <target name="jar-doc" depends="javadoc">
+        <jar destfile="${jar.dir}/Team7-Python-ApacheAnt-Doc.jar" basedir="${doc.dir}"/>
+    </target>
+
+    <!-- Package both JAR classes and documentation -->
+    <target name="package" depends="jar-classes, jar-doc">
+        <echo message="JAR files created in the 'jar' directory."/>
+    </target>
+</project>
